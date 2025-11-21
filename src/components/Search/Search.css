@@ -1,0 +1,47 @@
+.search-holder {
+	margin-top: 50px;
+}
+
+.search-form {
+	display: flex;
+	max-width: 1400px;
+	margin: auto;
+}
+
+.search-text-holder,
+.search-date-holder,
+.search-submit-holder {
+	box-sizing: border-box;
+}
+
+.search-text-holder {
+	width: 30%;
+}
+
+.search-date-holder {
+	width: 25%;
+}
+
+.search-submit-holder {
+	width: 15%;
+}
+
+.search-submit {
+	padding: 0;
+}
+
+.search-text,
+.search-date,
+.search-submit {
+	box-sizing: border-box;
+	block-size: 100%;
+	width: 99%;
+	font-size: 18px;
+	border: 1px black solid;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+.search-text:focus {
+	outline: none;
+}

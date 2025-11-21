@@ -1,0 +1,19 @@
+.login-container {
+	max-width: 1000px;
+	margin: auto;
+}
+
+.login-container form,
+.login-container > p {
+	width: 800px;
+	margin: auto;
+}
+
+.login-input {
+	width: 800px;
+}
+
+.login-submit {
+	display: block;
+	margin: 10px auto;
+}

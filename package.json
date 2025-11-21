@@ -1,0 +1,49 @@
+{
+	"name": "travel_app-frontend",
+	"private": true,
+	"version": "0.0.1",
+    "proxy": "http://localhost:5173",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"preview": "vite preview",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"lint:css": "stylelint \"**/*.{css,scss}\"",
+		"lint:css:fix": "stylelint \"**/*.{css,scss}\" --fix",
+		"prettier": "prettier --check .",
+		"prettier:fix": "prettier --write .",
+		"format": "npm run lint:fix && npm run lint:css:fix && npm run prettier:fix"
+	},
+	"dependencies": {
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"react-router-dom": "^7.9.4"
+	},
+	"devDependencies": {
+		"@eslint/css": "^0.13.0",
+		"@eslint/js": "^9.38.0",
+		"@types/node": "^24.6.0",
+		"@types/react": "^19.1.16",
+		"@types/react-dom": "^19.1.9",
+		"@typescript-eslint/eslint-plugin": "^8.46.2",
+		"@typescript-eslint/parser": "^8.46.2",
+		"@vitejs/plugin-react": "^5.0.4",
+		"eslint": "^9.38.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^5.2.0",
+		"eslint-plugin-react-refresh": "^0.4.22",
+		"globals": "^16.4.0",
+		"jiti": "^2.6.1",
+		"prettier": "^3.6.2",
+		"stylelint": "^16.25.0",
+		"stylelint-config-standard": "^39.0.1",
+		"stylelint-no-unsupported-browser-features": "^8.0.5",
+		"typescript": "~5.9.3",
+		"typescript-eslint": "^8.46.2",
+		"vite": "^7.1.7"
+	}
+}

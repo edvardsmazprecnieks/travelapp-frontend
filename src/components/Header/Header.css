@@ -1,0 +1,29 @@
+.main-header {
+	height: 90px;
+	width: 100%;
+	background-color: lightskyblue;
+}
+
+.all-content {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+	height: 90px;
+}
+
+.title-container {
+	margin-left: 20px;
+}
+
+.login-button-container {
+	margin-right: 20px;
+}
+
+.main-title {
+	margin: 0 auto;
+}
+
+.main-header a {
+	all: unset;
+}

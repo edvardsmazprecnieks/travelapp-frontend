@@ -1,0 +1,79 @@
+.search-title-container {
+	margin: 0;
+	text-align: center;
+}
+
+.grid-titles,
+.result-card-body {
+	display: flex;
+	max-width: 1800px;
+	margin: auto;
+}
+
+.title-duration-container,
+.title-price-container,
+.itinerary-duration-container,
+.result-card-price-container {
+	flex: 1;
+}
+
+.title-itinerary-container,
+.segments {
+	flex: 5;
+}
+
+.title-duration-container,
+.title-price-container,
+.itinerary-duration-container,
+.result-card-price-container,
+.title-itinerary-container,
+.segments {
+	padding: 10px;
+	margin: 0;
+}
+
+.segment-route-container {
+	display: flex;
+	flex: 3;
+	justify-content: space-evenly;
+}
+
+.result-card-body {
+	border: 2px cadetblue solid;
+}
+
+.itinerary-duration,
+.result-card-price {
+	font-size: 20px;
+}
+
+.segment-route-from,
+.segment-route-to,
+.segment-time,
+.segment-number {
+	font-size: 15px;
+}
+
+.title-duration,
+.itinerary-duration,
+.title-price,
+.result-card-price,
+.title-itinerary {
+	text-align: center;
+}
+
+.segment {
+	max-width: 1000px;
+}
+
+.segment-row {
+	display: flex;
+}
+
+.segment-number-container {
+	flex: 1;
+}
+
+.result-card {
+	margin: auto;
+}
