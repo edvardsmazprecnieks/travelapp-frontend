@@ -27,3 +27,19 @@
 .main-header a {
 	all: unset;
 }
+
+.user-name {
+    margin-right: 12px;
+    font-weight: 500;
+}
+
+.sign-out-button, .link-container {
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    padding: 4px 12px;
+}
+
+.buttons {
+    display: flex;
+}

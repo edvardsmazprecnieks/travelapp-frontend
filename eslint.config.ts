@@ -1,6 +1,7 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
+import reactRefresh from "eslint-plugin-react-refresh";
 
 import globals from "globals";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
@@ -24,6 +25,11 @@ export default defineConfig([
 		rules: {
 			"react/react-in-jsx-scope": "off",
 		},
+	},
+
+	{
+		files: ["**/*.tsx"],
+		...reactRefresh.configs.vite,
 	},
 
 	eslintConfigPrettier,

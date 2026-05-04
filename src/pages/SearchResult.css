@@ -38,12 +38,17 @@
 	justify-content: space-evenly;
 }
 
+.result-card-price-container {
+    display: flex;
+    flex-direction: column;
+}
 .result-card-body {
 	border: 2px cadetblue solid;
 }
 
 .itinerary-duration,
-.result-card-price {
+.result-card-price,
+.buy-button {
 	font-size: 20px;
 }
 
@@ -58,7 +63,8 @@
 .itinerary-duration,
 .title-price,
 .result-card-price,
-.title-itinerary {
+.title-itinerary,
+.buy-button {
 	text-align: center;
 }
 

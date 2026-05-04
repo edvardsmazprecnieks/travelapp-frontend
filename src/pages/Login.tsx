@@ -1,14 +1,52 @@
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useAuth } from "../context/useAuth";
 import "./Login.css";
 
 function Login() {
+	const { login } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [error, setError] = useState<string | null>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const redirectTo: string = location.state?.redirectTo ?? "/";
+	const flightState = location.state?.flightState ?? undefined;
+	const message: string | undefined = location.state?.message;
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		setError(null);
+		setIsSubmitting(true);
+
+		const form = new FormData(event.currentTarget);
+		try {
+			await login(
+				form.get("email") as string,
+				form.get("password") as string
+			);
+			navigate(redirectTo, { state: flightState, replace: true });
+		} catch (error) {
+			setError((error as Error).message);
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<div className="login-container">
 			<h2 className="title-login">Login</h2>
-			<form>
+			<form onSubmit={handleSubmit}>
+				<div className="error-container">
+					{error && <p className="error-message">{error}</p>}
+				</div>
+				<div className="error-container">
+					{message && <p className="error-message">{message}</p>}
+				</div>
 				<div className="login-input-container">
 					<p className="login-labels">E-mail address</p>
 					<input
-						type="text"
+						type="email"
 						className="login-input"
 						placeholder="Enter e-mail address"
 						name="email"
@@ -27,13 +65,19 @@ function Login() {
 					/>
 				</div>
 
-				<button className="login-submit" type="submit">
-					Login
+				<button
+					className="login-submit"
+					type="submit"
+					disabled={isSubmitting}
+				>
+					{isSubmitting ? "Logging in..." : "Login"}
 				</button>
 			</form>
 
 			<p>
-				<a href="/register">No account yet? Click here to sign up.</a>
+				<Link to="/register" state={{ redirectTo, flightState }}>
+					No account yet? Register here
+				</Link>
 			</p>
 		</div>
 	);

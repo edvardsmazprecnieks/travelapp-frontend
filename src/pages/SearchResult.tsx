@@ -1,6 +1,7 @@
 import "./SearchResult.css";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 type Segment = {
 	departure: {
@@ -35,15 +36,31 @@ function SearchResult() {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const { user, isLoading: authLoading } = useAuth();
 
 	const travelFrom = searchParams.get("travel-from");
 	const travelTo = searchParams.get("travel-to");
 	const travelDate = searchParams.get("travel-date");
 
 	useEffect(() => {
+		const iataCodeRegex = /^[a-zA-Z]{3}$/;
+		const travelDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+		if (
+			!travelFrom ||
+			!travelTo ||
+			!iataCodeRegex.test(travelFrom) ||
+			!iataCodeRegex.test(travelTo) ||
+			!travelDate ||
+			!travelDateRegex.test(travelDate)
+		) {
+			setError("Invalid search parameters.");
+			setLoading(false);
+			setData(null);
+			return;
+		}
 		setLoading(true);
-		const link = `/api/flightsearch?originLocationCode=${travelFrom}&destinationLocationCode=${travelTo}&departureDate=${travelDate}&adults=1`;
-		console.log(link);
+		const link = `/api/flights?originLocationCode=${travelFrom}&destinationLocationCode=${travelTo}&departureDate=${travelDate}&adults=1`;
 		fetch(link)
 			.then((res) => {
 				if (!res.ok) {
@@ -63,7 +80,36 @@ function SearchResult() {
 			});
 	}, [travelFrom, travelTo, travelDate]);
 
-	if (loading) return <div className="loading">Loading...</div>;
+	const handleBooking = (
+		result: Search,
+		itinerary: Itinerary,
+		travelFrom: string,
+		travelTo: string,
+		travelDate: string
+	) => {
+		const flightState = {
+			itineraryId: itinerary.id,
+			offer: result,
+			travelFrom,
+			travelTo,
+			travelDate,
+		};
+
+		if (user) {
+			navigate("/booking", { state: flightState });
+		} else {
+			navigate("/login", {
+				state: {
+					redirectTo: "/booking",
+					flightState,
+					message: "Please log in to purchase a flight",
+				},
+			});
+		}
+	};
+
+	if (loading || authLoading)
+		return <div className="loading">Loading...</div>;
 	if (error) return <div className="error">{error}</div>;
 	if (!data || data.length === 0)
 		return <div className="no-data">No data found.</div>;
@@ -121,11 +167,15 @@ function SearchResult() {
 															</p>
 															<p className="segment-time">
 																{new Date(
-																	segment.departure.at
+																	segment
+																		.departure
+																		.at
 																).toLocaleTimeString()}{" "}
 																-{" "}
 																{new Date(
-																	segment.arrival.at
+																	segment
+																		.arrival
+																		.at
 																).toLocaleTimeString()}
 															</p>
 															<p className="segment-route-to">
@@ -154,6 +204,26 @@ function SearchResult() {
 										<p className="result-card-price">
 											{result.price.grandTotal}
 										</p>
+										<button
+											className="buy-button"
+											onClick={() => {
+												if (
+													!travelFrom ||
+													!travelTo ||
+													!travelDate
+												)
+													return;
+												handleBooking(
+													result,
+													itinerary,
+													travelFrom,
+													travelTo,
+													travelDate
+												);
+											}}
+										>
+											Buy
+										</button>
 									</div>
 								</div>
 							))}

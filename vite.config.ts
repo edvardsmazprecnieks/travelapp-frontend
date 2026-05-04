@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
 	plugins: [react()],
 	resolve: {
 		dedupe: ["react", "react-dom"],
@@ -12,9 +12,8 @@ export default defineConfig({
 			"/api": {
 				target: "http://localhost:3000",
 				changeOrigin: true,
-				secure: false,
-				rewrite: (path) => path.replace(/^\/api/, ""),
+				secure: command !== "serve",
 			},
 		},
 	},
-});
+}));
