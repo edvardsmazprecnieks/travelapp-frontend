@@ -1,6 +1,6 @@
 import { getAccessToken, setAccessToken } from "./authStore";
 
-const baseUrl = "/api";
+const baseUrl = import.meta.env.VITE_API_URL;
 
 let isRefreshing = false;
 let refreshSubscribers: ((token: string | null) => void)[] = [];
