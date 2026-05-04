@@ -73,7 +73,7 @@ export async function getMe(): Promise<User> {
 
 export async function initAuth(): Promise<AuthResponse | null> {
 	try {
-		const res = await fetch("/api/user/refresh", {
+		const res = await apiFetch("/user/refresh", {
 			method: "POST",
 			credentials: "include",
 		});
