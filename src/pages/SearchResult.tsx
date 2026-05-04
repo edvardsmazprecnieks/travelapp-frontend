@@ -2,6 +2,7 @@ import "./SearchResult.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { apiFetch } from "@/lib/apiClient.ts";
 
 type Segment = {
 	departure: {
@@ -60,8 +61,8 @@ function SearchResult() {
 			return;
 		}
 		setLoading(true);
-		const link = `/api/flights?originLocationCode=${travelFrom}&destinationLocationCode=${travelTo}&departureDate=${travelDate}&adults=1`;
-		fetch(link)
+		const link = `/flights?originLocationCode=${travelFrom}&destinationLocationCode=${travelTo}&departureDate=${travelDate}&adults=1`;
+		apiFetch(link)
 			.then((res) => {
 				if (!res.ok) {
 					throw new Error("Network response was not ok");
