@@ -1,4 +1,4 @@
-import { apiFetch } from "./apiClient";
+import { apiFetch, fetchCsrfToken } from "./apiClient";
 import { setAccessToken } from "./authStore";
 
 export interface User {
@@ -53,6 +53,7 @@ export async function loginUser(
 
 	const data = (await res.json()) as AuthResponse;
 	setAccessToken(data.accessToken);
+	await fetchCsrfToken();
 	return data;
 }
 
@@ -84,6 +85,7 @@ export async function initAuth(): Promise<AuthResponse | null> {
 
 		const data = (await res.json()) as AuthResponse;
 		setAccessToken(data.accessToken);
+		await fetchCsrfToken();
 		console.log(data);
 
 		return data;

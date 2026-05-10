@@ -20,10 +20,24 @@ function Register() {
 		const form = new FormData(event.currentTarget);
 		try {
 			// add email verification and password verification (repeated email and password in form)
-			await registerUser(
-				form.get("email") as string,
-				form.get("password") as string
-			);
+			const email = form.get("email") as string;
+			const password = form.get("password") as string;
+
+			const confirmEmail = form.get("email-confirm") as string;
+			const confirmPassword = form.get("password-confirm") as string;
+
+			if (email !== confirmEmail) {
+				setError("Emails do not match.");
+				return;
+			}
+
+			if (password !== confirmPassword) {
+				setError("Passwords do not match.");
+				return;
+			}
+
+			await registerUser(email, password);
+
 			navigate("/login", {
 				state: { redirectTo, flightState },
 				replace: true,
