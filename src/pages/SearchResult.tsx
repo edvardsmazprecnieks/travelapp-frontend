@@ -45,16 +45,7 @@ function SearchResult() {
 	const travelDate = searchParams.get("travel-date");
 
 	useEffect(() => {
-		const iataCodeRegex = /^[a-zA-Z]{3}$/;
-		const travelDateRegex = /^\d{4}-\d{2}-\d{2}$/;
-		if (
-			!travelFrom ||
-			!travelTo ||
-			!iataCodeRegex.test(travelFrom) ||
-			!iataCodeRegex.test(travelTo) ||
-			!travelDate ||
-			!travelDateRegex.test(travelDate)
-		) {
+		if (!travelFrom || !travelTo || !travelDate) {
 			setError("Invalid search parameters.");
 			setLoading(false);
 			setData(null);
@@ -65,13 +56,15 @@ function SearchResult() {
 		apiFetch(link)
 			.then((res) => {
 				if (!res.ok) {
-					throw new Error("Network response was not ok");
+					return res.json().then((body) => {
+						throw new Error(
+							body?.message ?? "Something went wrong."
+						);
+					});
 				}
-				console.log(res);
 				return res.json();
 			})
 			.then((jsonData) => {
-				console.log(jsonData);
 				setData(jsonData);
 				setLoading(false);
 			})
