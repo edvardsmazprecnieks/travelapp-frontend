@@ -10,7 +10,11 @@ function Login() {
 	const [error, setError] = useState<string | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const redirectTo: string = location.state?.redirectTo ?? "/";
+	const redirectToLink: string = location.state?.redirectTo ?? "/";
+	const redirectToChecked: string =
+		redirectToLink.startsWith("/") && !redirectToLink.startsWith("//") ?
+			redirectToLink
+		:	"/";
 	const flightState = location.state?.flightState ?? undefined;
 	const message: string | undefined = location.state?.message;
 
@@ -25,7 +29,7 @@ function Login() {
 				form.get("email") as string,
 				form.get("password") as string
 			);
-			navigate(redirectTo, { state: flightState, replace: true });
+			navigate(redirectToChecked, { state: flightState, replace: true });
 		} catch (error) {
 			setError((error as Error).message);
 		} finally {
@@ -75,7 +79,7 @@ function Login() {
 			</form>
 
 			<p>
-				<Link to="/register" state={{ redirectTo, flightState }}>
+				<Link to="/register" state={{ redirectToChecked, flightState }}>
 					No account yet? Register here
 				</Link>
 			</p>

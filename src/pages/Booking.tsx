@@ -97,7 +97,14 @@ function Booking() {
 				throw new Error(err.message ?? "Booking failed.");
 			}
 			const data = (await res.json()) as { checkoutUrl: string };
-			window.location.href = data.checkoutUrl;
+
+			const ALLOWED_ORIGINS = ["https://checkout.stripe.com"];
+			const url = new URL(data.checkoutUrl);
+			if (!ALLOWED_ORIGINS.includes(url.origin)) {
+				throw new Error("Invalid checkout URL.");
+			} else {
+				window.location.href = data.checkoutUrl;
+			}
 		} catch (err) {
 			setError((err as Error).message);
 			setIsSubmitting(false);
