@@ -19,7 +19,6 @@ function Register() {
 
 		const form = new FormData(event.currentTarget);
 		try {
-			// add email verification and password verification (repeated email and password in form)
 			const email = form.get("email") as string;
 			const password = form.get("password") as string;
 

@@ -17,7 +17,7 @@ export interface AuthResponse {
 export async function registerUser(
 	email: string,
 	password: string
-): Promise<AuthResponse> {
+): Promise<void> {
 	const res = await apiFetch("/user/register", {
 		method: "POST",
 		body: JSON.stringify({ email, password }),
@@ -29,10 +29,7 @@ export async function registerUser(
 			(err as { message?: string }).message ?? "Registration failed"
 		);
 	}
-
-	const data = (await res.json()) as AuthResponse;
-	setAccessToken(data.accessToken);
-	return data;
+	return;
 }
 
 export async function loginUser(
